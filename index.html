@@ -147,7 +147,11 @@
     <script type="module">
         import OBR from 'https://unpkg.com/@owlbear-rodeo/sdk@latest/lib/index.js';
         window.OBR = OBR;
+        
+        // Wait a moment then load app.js
+        const script = document.createElement('script');
+        script.src = 'app.js';
+        document.body.appendChild(script);
     </script>
-    <script src="app.js"></script>
 </body>
 </html>
