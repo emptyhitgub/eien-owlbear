@@ -144,7 +144,10 @@
     </div>
 
     <!-- Load Owlbear Rodeo SDK -->
-    <script src="https://unpkg.com/@owlbear-rodeo/sdk@latest/dist/index.global.js"></script>
+    <script type="module">
+        import OBR from 'https://unpkg.com/@owlbear-rodeo/sdk@latest/lib/index.js';
+        window.OBR = OBR;
+    </script>
     <script src="app.js"></script>
 </body>
 </html>
