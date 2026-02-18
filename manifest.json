@@ -2,13 +2,13 @@
   "name": "Eien Owlbear",
   "version": "1.0.0",
   "manifest_version": 1,
-  "icon": "https://emptyhitgub.github.io/eien-owlbear/icon.svg",
+  "icon": "icon.svg",
   "author": "emptyhitgub",
   "description": "Character tracker for Eientracker Discord bot",
   "action": {
     "title": "Eien Owlbear",
-    "icon": "https://emptyhitgub.github.io/eien-owlbear/icon.svg",
-    "popover": "https://emptyhitgub.github.io/eien-owlbear/index.html",
+    "icon": "icon.svg",
+    "popover": "index.html",
     "height": 600,
     "width": 350
   }

@@ -1,20 +1,46 @@
 // Global state
 let character = null;
 
+// Wait for SDK to be available
+function waitForOBR() {
+    return new Promise((resolve, reject) => {
+        if (typeof window.OBR !== 'undefined') {
+            resolve(window.OBR);
+            return;
+        }
+        
+        let attempts = 0;
+        const maxAttempts = 50; // 5 seconds
+        
+        const interval = setInterval(() => {
+            attempts++;
+            
+            if (typeof window.OBR !== 'undefined') {
+                clearInterval(interval);
+                resolve(window.OBR);
+            } else if (attempts >= maxAttempts) {
+                clearInterval(interval);
+                reject(new Error('Owlbear SDK not available. Make sure this extension is loaded from within Owlbear Rodeo.'));
+            }
+        }, 100);
+    });
+}
+
 // Initialize Owlbear Rodeo SDK
 async function initializeOwlbear() {
     try {
+        const OBR = await waitForOBR();
         await OBR.onReady();
         console.log('Owlbear Rodeo SDK ready!');
         
         // Set extension height
-        OBR.action.setHeight(450);
+        OBR.action.setHeight(600);
         
         // Load saved character from Owlbear's storage
         loadCharacterFromStorage();
     } catch (error) {
         console.error('Failed to initialize Owlbear SDK:', error);
-        showError('Failed to connect to Owlbear Rodeo');
+        showError(error.message || 'Failed to connect to Owlbear Rodeo');
     }
 }
 
@@ -23,7 +49,7 @@ async function saveCharacterToStorage() {
     if (!character) return;
     
     try {
-        await OBR.room.setMetadata({
+        await window.OBR.room.setMetadata({
             'character-tracker/character': character
         });
     } catch (error) {
@@ -34,7 +60,7 @@ async function saveCharacterToStorage() {
 // Load character from Owlbear's storage
 async function loadCharacterFromStorage() {
     try {
-        const metadata = await OBR.room.getMetadata();
+        const metadata = await window.OBR.room.getMetadata();
         const savedCharacter = metadata['character-tracker/character'];
         
         if (savedCharacter) {
@@ -191,7 +217,7 @@ function performAttack() {
 // Send roll result to Owlbear Rodeo's chat
 async function sendRollToChat(stat1Name, stat2Name, dice1, dice2, modifier, gate, roll1, roll2, result1, result2, hits) {
     try {
-        await OBR.notification.show(
+        await window.OBR.notification.show(
             `${character.characterName}: ${stat1Name}+${stat2Name} = ${hits} hit${hits !== 1 ? 's' : ''}! (d${dice1}+d${dice2}${modifier >= 0 ? '+' : ''}${modifier}, gate ≤${gate})`,
             'INFO'
         );
@@ -222,7 +248,7 @@ async function clearCharacter() {
     
     // Clear from storage
     try {
-        await OBR.room.setMetadata({
+        await window.OBR.room.setMetadata({
             'character-tracker/character': null
         });
     } catch (error) {
