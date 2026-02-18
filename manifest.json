@@ -1,0 +1,15 @@
+{
+  "name": "Eien Owlbear",
+  "version": "1.0.0",
+  "manifest_version": 1,
+  "icon": "icon.svg",
+  "author": "emptyhitgub",
+  "description": "Character tracker for Eientracker Discord bot",
+  "action": {
+    "title": "Eien Owlbear",
+    "icon": "icon.svg",
+    "popover": "index.html",
+    "height": 600,
+    "width": 350
+  }
+}
