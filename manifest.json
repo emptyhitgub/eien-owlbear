@@ -1,0 +1,13 @@
+{
+  "name": "Eien Owlbear",
+  "version": "1.0.0",
+  "manifest_version": 1,
+  "icon": "/icon.svg",
+  "action": {
+    "title": "Eien Owlbear",
+    "icon": "/icon.svg",
+    "popover": "/index.html",
+    "height": 400,
+    "width": 350
+  }
+}
